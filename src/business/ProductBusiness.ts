@@ -24,18 +24,6 @@ export class ProductBusiness {
     public createProduct = async (input: any) => {
         const { id, name, price } = input
 
-        if (typeof id !== "string") {
-            throw new BadRequestError("'id' deve ser string")
-        }
-
-        if (typeof name !== "string") {
-            throw new BadRequestError("'name' deve ser string")
-        }
-
-        if (typeof price !== "number") {
-            throw new BadRequestError("'price' deve ser number")
-        }
-
         if (name.length < 2) {
             throw new BadRequestError("'name' deve possuir pelo menos 2 caracteres")
         }
