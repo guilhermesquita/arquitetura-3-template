@@ -1,9 +1,20 @@
 import { BadRequestError } from "../errors/BadRequestError"
+import { Product } from "../models/Product"
 
-interface ProductInputDTO {
+export interface ProductInputDTO {
     id: string,
     name: string,
     price: number
+}
+
+export interface ProductOutputDTO {
+    message: string,
+    product: {
+        id: string,
+        name:string,
+        price: number,
+        createdAt: string
+    }
 }
 
 export class ProductDTO{
@@ -27,5 +38,19 @@ export class ProductDTO{
         }
 
         return dto
+    }
+
+    public createProductOutput(product: Product){
+        const dto:ProductOutputDTO = {
+            message: 'Criado com sucesso',
+            product: {
+                id: product.getId(),
+                name: product.getName(),
+                price: product.getPrice(),
+                createdAt: product.getCreatedAt()
+            }
+        }
+
+        return dto;
     }
 }

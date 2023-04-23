@@ -1,4 +1,5 @@
 import { ProductDatabase } from "../database/ProductDatabase"
+import { ProductDTO, ProductInputDTO } from "../dtos/ProductDTO"
 import { BadRequestError } from "../errors/BadRequestError"
 import { NotFoundError } from "../errors/NotFoundError"
 import { Product } from "../models/Product"
@@ -21,7 +22,7 @@ export class ProductBusiness {
         return products
     }
 
-    public createProduct = async (input: any) => {
+    public createProduct = async (input: ProductInputDTO) => {
         const { id, name, price } = input
 
         if (name.length < 2) {
@@ -55,10 +56,13 @@ export class ProductBusiness {
 
         await productDatabase.insertProduct(newProductDB)
 
-        const output = {
-            message: "Produto registrado com sucesso",
-            product: newProduct
-        }
+        // const output = {
+        //     message: "Produto registrado com sucesso",
+        //     product: newProduct
+        // }
+
+        const dto = new ProductDTO()
+        const output = dto.createProductOutput(newProduct)
 
         return output
     }

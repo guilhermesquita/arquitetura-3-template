@@ -1,9 +1,14 @@
 import express from "express"
 import { ProductController } from "../controller/ProductController"
+import { ProductBusiness } from "../business/ProductBusiness"
+import { ProductDTO } from "../dtos/ProductDTO"
 
 export const productRouter = express.Router()
 
-const productController = new ProductController()
+const productController = new ProductController(
+    new ProductBusiness,
+    new ProductDTO
+)
 
 productRouter.get("/", productController.getProducts)
 productRouter.post("/", productController.createProduct)

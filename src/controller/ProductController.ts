@@ -4,6 +4,12 @@ import { BaseError } from "../errors/BaseError"
 import { ProductDTO } from "../dtos/ProductDTO"
 
 export class ProductController {
+
+    constructor(
+        private productBusiness: ProductBusiness,
+        private newProductDTO: ProductDTO
+    ) { }
+
     public getProducts = async (req: Request, res: Response) => {
         try {
             const input = {
@@ -34,15 +40,15 @@ export class ProductController {
             //         price: req.body.price
             //     }
 
-            const newProductDto = new ProductDTO()
-            const input = newProductDto.createProductInput(
+            // const newProductDto = new ProductDTO()
+            const input = this.newProductDTO.createProductInput(
                 req.body.id,
                 req.body.name,
                 req.body.price
             )
 
-            const productBusiness = new ProductBusiness()
-            const output = await productBusiness.createProduct(input)
+            // const productBusiness = new ProductBusiness()
+            const output = await this.productBusiness.createProduct(input)
 
             res.status(201).send(output)
         } catch (error) {
